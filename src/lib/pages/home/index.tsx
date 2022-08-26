@@ -5,7 +5,10 @@ import ChartBox from "lib/components/charts/LineChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import { ReturnDataType } from "lib/types/types/base";
-import { IDailyTransactionFee } from "lib/types/types/home";
+import {
+  IDailyTransactionFee,
+  IHourlyTransactionFee,
+} from "lib/types/types/home";
 import names from "lib/utility/names";
 
 import { NextSeo } from "next-seo";
@@ -39,9 +42,13 @@ const colors = [
 
 interface Props {
   dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
+  hourlyTransactionFee: ReturnDataType<IHourlyTransactionFee[]>;
 }
 
-const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
+const Governance = ({
+  dailyTransactionFee,
+  hourlyTransactionFee,
+}: Props): JSX.Element => {
   return (
     <>
       <NextSeo
@@ -89,6 +96,18 @@ const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
             baseSpan={3}
             areaDataKey="Fee"
             xAxisDataKey="Day"
+          />
+
+          <ChartBox
+            customColor={colors[0]}
+            data={hourlyTransactionFee.data}
+            queryLink={hourlyTransactionFee.key}
+            modelInfo=""
+            title={hourlyTransactionFee.title}
+            baseSpan={3}
+            areaDataKey="Fee"
+            isNotDate
+            xAxisDataKey="Hour"
           />
         </SimpleGrid>
       </Box>
