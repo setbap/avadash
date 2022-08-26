@@ -246,7 +246,7 @@ const ChartBox = ({
               </linearGradient>
             </defs>
             <CartesianGrid
-              style={{ stroke: "rgba(10,10,10,0.1)", opacity: 0.25 }}
+              style={{ stroke: "rgba(110,110,110,1)", opacity: 0.15 }}
               strokeDasharray="3 3"
             />
             <XAxis
