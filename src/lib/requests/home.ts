@@ -1,8 +1,11 @@
 import {
   IDailyBlockAge,
+  IDailyNewWallets,
   IDailyTPBInfo,
   IDailyTPSInfo,
+  IMostPopularActions,
   IOverallBlockInfo,
+  ITodayNewWallet,
 } from "lib/types/types/home";
 import { getSimpleArrayData, getSimpleInfo } from "./utils";
 
@@ -29,3 +32,18 @@ export const getDailyBlockAge = () =>
     "Daily Block Age (sec)",
     "Day"
   );
+
+export const getMostPopularActions = () =>
+  getSimpleArrayData<IMostPopularActions, IMostPopularActions>(
+    "9381160f-7c1a-4cd1-ad39-eee128c65c02",
+    "Most Popular Type of action By Number of transactions for Avalanche"
+  );
+
+export const getDailyNewWallets = () =>
+  getSimpleArrayData<IDailyNewWallets, IDailyNewWallets>(
+    "e0293c78-59d6-45a1-870c-f6d3bdb059fa",
+    "Daily new wallets"
+  );
+
+export const getCurrentNewWallet = () =>
+  getSimpleInfo<ITodayNewWallet>("a1248e29-464f-4c3d-a4b4-f2d5fe440e56", "");

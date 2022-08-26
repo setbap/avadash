@@ -14,9 +14,12 @@ import { FiExternalLink } from "react-icons/fi";
 
 import {
   IDailyBlockAge,
+  IDailyNewWallets,
   IDailyTPBInfo,
   IDailyTPSInfo,
+  IMostPopularActions,
   IOverallBlockInfo,
+  ITodayNewWallet,
 } from "lib/types/types/home";
 
 const CalendarChart: any = dynamic(
@@ -49,6 +52,9 @@ interface Props {
   dailyTPSInfo: ReturnDataType<IDailyTPSInfo[]>;
   dailyTPBInfo: ReturnDataType<IDailyTPBInfo[]>;
   dailyBlockAge: ReturnDataType<IDailyBlockAge[]>;
+  mostPopularActions: ReturnDataType<IMostPopularActions[]>;
+  dailyNewWallets: ReturnDataType<IDailyNewWallets[]>;
+  currentNewWallet: ReturnDataType<ITodayNewWallet>;
 }
 
 const Governance = ({
@@ -56,6 +62,9 @@ const Governance = ({
   dailyTPSInfo,
   dailyTPBInfo,
   dailyBlockAge,
+  mostPopularActions,
+  dailyNewWallets,
+  currentNewWallet,
 }: Props): JSX.Element => {
   return (
     <>
@@ -122,6 +131,13 @@ const Governance = ({
             status="inc"
             link={totalBlockInfo.key}
           />
+
+          <StatsCard
+            stat={currentNewWallet.data["Current New Wallets"]}
+            title="Yesterday New Wallets"
+            status="inc"
+            link={currentNewWallet.key}
+          />
         </SimpleGrid>
         <SimpleGrid
           position={"relative"}
@@ -131,6 +147,26 @@ const Governance = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
+          <DonutChart
+            queryLink={mostPopularActions.key}
+            data={mostPopularActions.data}
+            modelInfo=""
+            title={mostPopularActions.title}
+            nameKey="Type"
+            dataKey="TX Count"
+          />
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={dailyNewWallets.data}
+            queryLink={dailyNewWallets.key}
+            modelInfo=""
+            title={dailyNewWallets.title}
+            baseSpan={2}
+            barDataKey="New Wallets"
+            lineDataKey="Average New Wallets"
+            xAxisDataKey="Day"
+          />
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}

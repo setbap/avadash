@@ -26,3 +26,18 @@ export interface IDailyBlockAge {
   "Average Block Time": number;
   "Daily Block Age": number;
 }
+
+export interface IMostPopularActions {
+  Type: string;
+  "TX Count": number;
+}
+
+export interface IDailyNewWallets {
+  Day: number;
+  "New Wallets": number;
+  "Average New Wallets": number;
+}
+
+export interface ITodayNewWallet {
+  "Current New Wallets": number;
+}

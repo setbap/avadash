@@ -17,7 +17,6 @@ interface Props {
   dataKey: string;
   nameKey: string;
   title: string;
-  tooltipTitle: string;
   data: any[];
   baseSpan?: number;
   colors?: string[];
@@ -32,7 +31,6 @@ const DonutChart = ({
   data,
   title,
   modelInfo,
-  tooltipTitle,
   colors = [
     "#00bcd4",
     "#ffc107",
