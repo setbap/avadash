@@ -46,7 +46,7 @@ export default function ChartHeader({
       alignItems="center"
       justifyContent={"space-between"}
     >
-      {!(modalInfo === "" || modalInfo === null) && (
+      {!(modalInfo === "" || modalInfo === null) ? (
         <IconButton
           size={"sm"}
           variant={"outline"}
@@ -57,6 +57,8 @@ export default function ChartHeader({
           }}
           icon={<AiOutlineInfoCircle />}
         />
+      ) : (
+        <Box></Box>
       )}
       <Box>
         <chakra.h6 textAlign={"center"} noOfLines={1} textOverflow="ellipsis">

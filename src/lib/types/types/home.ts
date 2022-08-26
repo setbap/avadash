@@ -1,1 +1,4 @@
-export interface FooBar {}
+export interface IDailyTransactionFee {
+  Fee: number;
+  Day: String;
+}

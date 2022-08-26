@@ -34,7 +34,6 @@ interface Props {
   xAxisDataKey: string;
   areaDataKey: string;
   title: string;
-  tooltipTitle: string;
   data: any[];
   extraDecimal?: number;
   isNotDate?: boolean;

@@ -1,9 +1,9 @@
 import Home from "lib/pages/home";
-import {} from "lib/requests/home";
+import { getDailyTransactionFee } from "lib/requests/home";
 export async function getStaticProps() {
-  const [] = await Promise.all([]);
+  const [dailyTransactionFee] = await Promise.all([getDailyTransactionFee()]);
   return {
-    props: {},
+    props: { dailyTransactionFee },
     revalidate: 10 * 60,
   };
 }

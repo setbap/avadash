@@ -2,17 +2,19 @@ import { ReturnDataType } from "lib/types/types/base";
 import moment from "moment";
 
 export const getSimpleInfo = async <T>(
-  velocityKey: string
+  velocityKey: string,
+  title: string
 ): Promise<ReturnDataType<T>> => {
   const res = await fetch(
     `https://node-api.flipsidecrypto.com/api/v2/queries/${velocityKey}/data/latest`
   );
   const data: T = (await res.json())[0];
-  return { data, key: velocityKey };
+  return { data, title, key: velocityKey };
 };
 
 export const getSimpleArrayData = async <T, R = null>(
   velocityKey: string,
+  title: string,
   sortKey: keyof T | null = null,
   mapFn: ((item: T) => R) | null = null
 ): Promise<ReturnDataType<T[] | R[]>> => {
@@ -28,12 +30,14 @@ export const getSimpleArrayData = async <T, R = null>(
   if (mapFn !== null) {
     return {
       data: fetchedData.map(mapFn),
+      title,
       key: velocityKey,
     };
   }
 
   return {
     data: fetchedData,
+    title,
     key: velocityKey,
   };
 };

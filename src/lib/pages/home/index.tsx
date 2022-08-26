@@ -1,9 +1,11 @@
 import { Box, GridItem, Heading, Link, SimpleGrid } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
 import DonutChart from "lib/components/charts/DonutChart";
+import ChartBox from "lib/components/charts/LineChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
-import {} from "lib/types/types/home";
+import { ReturnDataType } from "lib/types/types/base";
+import { IDailyTransactionFee } from "lib/types/types/home";
 import names from "lib/utility/names";
 
 import { NextSeo } from "next-seo";
@@ -35,9 +37,11 @@ const colors = [
   "#607d8b",
 ];
 
-interface Props {}
+interface Props {
+  dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
+}
 
-const Governance = ({}: Props): JSX.Element => {
+const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
   return (
     <>
       <NextSeo
@@ -76,7 +80,16 @@ const Governance = ({}: Props): JSX.Element => {
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
-          {/* put charts */}
+          <ChartBox
+            customColor={colors[0]}
+            data={dailyTransactionFee.data}
+            queryLink={dailyTransactionFee.key}
+            modelInfo=""
+            title={dailyTransactionFee.title}
+            baseSpan={3}
+            areaDataKey="Fee"
+            xAxisDataKey="Day"
+          />
         </SimpleGrid>
       </Box>
     </>
