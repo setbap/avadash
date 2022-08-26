@@ -1,8 +1,6 @@
-import names from "./src/lib/utility/names";
-
 /** @type {import('next-sitemap').IConfig} */
 const NextSitemapConfig = {
-  siteUrl: `https://${names.APP_NAME}`,
+  siteUrl: `https://AvaDash.vercel.app`,
   generateRobotsTxt: true,
 };
 
