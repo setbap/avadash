@@ -236,12 +236,12 @@ const ChartBox = ({
                 <stop
                   offset="0%"
                   style={{ stopColor: chartColor }}
-                  stopOpacity={0.95}
+                  stopOpacity={0.7}
                 />
                 <stop
                   offset="95%"
                   style={{ stopColor: chartColor }}
-                  stopOpacity={0.8}
+                  stopOpacity={0.1}
                 />
               </linearGradient>
             </defs>
@@ -299,8 +299,7 @@ const ChartBox = ({
             />
             <Area
               dataKey={areaDataKey}
-              style={{ stroke: chartColor }}
-              stroke={"red"}
+              stroke={customColor}
               fill={`url(#color${additionalDumpTextToAddKeyToKeyBeUnique})`}
             />
 
