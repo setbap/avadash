@@ -9,11 +9,12 @@ const getData = async (
   );
   const rawQuery = `
     select tx_hash, block_timestamp,nonce,origin_function_signature
-    from polygon.core.fact_transactions
+    from avalanche.core.fact_transactions
     where FROM_ADDRESS = '${address.toLowerCase()}'
     order by block_timestamp desc
     `;
 
+  console.log(rawQuery);
   const query: Query = {
     sql: rawQuery,
     ttlMinutes: 60 * 6,

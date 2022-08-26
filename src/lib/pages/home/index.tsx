@@ -21,6 +21,12 @@ import {
   IOverallBlockInfo,
   ITodayNewWallet,
 } from "lib/types/types/home";
+import {
+  IAverageFeeOnEachDayOfWeek,
+  IDailyTransactionFee,
+  IHourlyTransactionFee,
+  ITotalFeeInfo,
+} from "lib/types/types/fee";
 
 const CalendarChart: any = dynamic(
   () => import("../../components/charts/CalendarChart"),
@@ -55,6 +61,12 @@ interface Props {
   mostPopularActions: ReturnDataType<IMostPopularActions[]>;
   dailyNewWallets: ReturnDataType<IDailyNewWallets[]>;
   currentNewWallet: ReturnDataType<ITodayNewWallet>;
+  // fee
+  totalFeeInfo: ReturnDataType<ITotalFeeInfo>;
+  dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
+  hourlyTransactionFee: ReturnDataType<IHourlyTransactionFee[]>;
+  dailyAverageTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
+  averageFeeOnEachDayOfWeek: ReturnDataType<IAverageFeeOnEachDayOfWeek[]>;
 }
 
 const Governance = ({
@@ -65,6 +77,12 @@ const Governance = ({
   mostPopularActions,
   dailyNewWallets,
   currentNewWallet,
+  // fee
+  totalFeeInfo,
+  dailyTransactionFee,
+  hourlyTransactionFee,
+  dailyAverageTransactionFee,
+  averageFeeOnEachDayOfWeek,
 }: Props): JSX.Element => {
   return (
     <>
@@ -94,6 +112,26 @@ const Governance = ({
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
         >
+          <StatsCard
+            stat={totalFeeInfo.data["Average Fee"]}
+            title="Average TX Fee"
+            status="inc"
+            decimal={4}
+            link={totalFeeInfo.key}
+          />
+
+          <StatsCard
+            stat={totalFeeInfo.data["Total Fee"]}
+            title="Total Generated Fee"
+            status="inc"
+            link={totalFeeInfo.key}
+          />
+          <StatsCard
+            stat={currentNewWallet.data["Current New Wallets"]}
+            title="Yesterday New Wallets"
+            status="inc"
+            link={currentNewWallet.key}
+          />
           <StatsCard
             stat={totalBlockInfo.data["Min Block Time"]}
             title="Min Block Time(second)"
@@ -131,13 +169,6 @@ const Governance = ({
             status="inc"
             link={totalBlockInfo.key}
           />
-
-          <StatsCard
-            stat={currentNewWallet.data["Current New Wallets"]}
-            title="Yesterday New Wallets"
-            status="inc"
-            link={currentNewWallet.key}
-          />
         </SimpleGrid>
         <SimpleGrid
           position={"relative"}
@@ -165,6 +196,55 @@ const Governance = ({
             baseSpan={2}
             barDataKey="New Wallets"
             lineDataKey="Average New Wallets"
+            xAxisDataKey="Day"
+          />
+          <ChartBox
+            customColor={colors[0]}
+            data={dailyTransactionFee.data}
+            queryLink={dailyTransactionFee.key}
+            modelInfo=""
+            title={dailyTransactionFee.title}
+            baseSpan={3}
+            areaDataKey="Fee"
+            xAxisDataKey="Day"
+          />
+
+          <ChartBox
+            customColor={colors[0]}
+            data={hourlyTransactionFee.data}
+            queryLink={hourlyTransactionFee.key}
+            modelInfo=""
+            title={hourlyTransactionFee.title}
+            baseSpan={3}
+            extraDecimal={8}
+            areaDataKey="Fee"
+            isNotDate
+            xAxisDataKey="Hour"
+          />
+
+          <ChartBox
+            customColor={colors[0]}
+            data={averageFeeOnEachDayOfWeek.data}
+            queryLink={averageFeeOnEachDayOfWeek.key}
+            modelInfo=""
+            title={averageFeeOnEachDayOfWeek.title}
+            baseSpan={3}
+            extraDecimal={8}
+            areaDataKey="Fee"
+            isNotDate
+            xAxisDataKey="Day Name"
+          />
+
+          <ChartBox
+            customColor={colors[3]}
+            data={dailyAverageTransactionFee.data}
+            queryLink={dailyAverageTransactionFee.key}
+            modelInfo=""
+            extraDecimal={8}
+            title={dailyAverageTransactionFee.title}
+            baseSpan={3}
+            additionalDumpTextToAddKeyToKeyBeUnique={"-"}
+            areaDataKey="Fee"
             xAxisDataKey="Day"
           />
           <LineChartWithBar

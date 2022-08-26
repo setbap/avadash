@@ -130,7 +130,6 @@ function Transactions() {
                 </Text>
               </TxItemContainer>
             )}
-
           {(mutation.isError ||
             (mutation.isSuccess && !!mutation.error) ||
             (mutation.isSuccess && !!mutation.data.error)) && (
