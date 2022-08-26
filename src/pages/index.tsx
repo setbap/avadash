@@ -1,9 +1,25 @@
 import Home from "lib/pages/home";
-import {} from "lib/requests/home";
+import {
+  getTotalBlockInfo,
+  getDailyTPSInfo,
+  getDailyTPBInfo,
+  getDailyBlockAge,
+} from "lib/requests/home";
 export async function getStaticProps() {
-  const [] = await Promise.all([]);
+  const [totalBlockInfo, dailyTPSInfo, dailyTPBInfo, dailyBlockAge] =
+    await Promise.all([
+      getTotalBlockInfo(),
+      getDailyTPSInfo(),
+      getDailyTPBInfo(),
+      getDailyBlockAge(),
+    ]);
   return {
-    props: {},
+    props: {
+      totalBlockInfo,
+      dailyTPSInfo,
+      dailyTPBInfo,
+      dailyBlockAge,
+    },
     revalidate: 10 * 60,
   };
 }

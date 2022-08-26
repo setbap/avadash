@@ -35,7 +35,6 @@ interface Props {
   lineDataKey: string;
   barDataKey: string;
   title: string;
-  tooltipTitle: string;
   data: any[];
   extraDecimal?: number;
   isNotDate?: boolean;
@@ -240,18 +239,18 @@ const LineChartWithBar = ({
               >
                 <stop
                   offset="0%"
-                  style={{ stopColor: chartColor }}
-                  stopOpacity={0.95}
+                  style={{ stopColor: barColor }}
+                  stopOpacity={0.7}
                 />
                 <stop
                   offset="95%"
-                  style={{ stopColor: chartColor }}
-                  stopOpacity={0.8}
+                  style={{ stopColor: barColor }}
+                  stopOpacity={0.3}
                 />
               </linearGradient>
             </defs>
             <CartesianGrid
-              style={{ stroke: "rgba(10,10,10,0.1)", opacity: 0.25 }}
+              style={{ stroke: "rgba(110,110,110,1)", opacity: 0.25 }}
               strokeDasharray="3 3"
             />
             <XAxis
@@ -315,15 +314,14 @@ const LineChartWithBar = ({
             <Bar
               yAxisId={showSeprate ? "right" : "left"}
               dataKey={barDataKey}
-              fill={barColor}
+              fill={`url(#color${additionalDumpTextToAddKeyToKeyBeUnique})`}
             />
 
             <Area
               dataKey={lineDataKey}
               yAxisId="left"
               strokeWidth={"2"}
-              style={{ stroke: chartColor }}
-              fill={`${chartColor}6f`}
+              fill={`${chartColor}20`}
             />
 
             {/* <Legend

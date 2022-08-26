@@ -12,6 +12,13 @@ import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
 import { FiExternalLink } from "react-icons/fi";
 
+import {
+  IDailyBlockAge,
+  IDailyTPBInfo,
+  IDailyTPSInfo,
+  IOverallBlockInfo,
+} from "lib/types/types/home";
+
 const CalendarChart: any = dynamic(
   () => import("../../components/charts/CalendarChart"),
   { ssr: false }
@@ -38,10 +45,18 @@ const colors = [
 ];
 
 interface Props {
-  dailyTransactionFee: ReturnDataType<any[]>;
+  totalBlockInfo: ReturnDataType<IOverallBlockInfo>;
+  dailyTPSInfo: ReturnDataType<IDailyTPSInfo[]>;
+  dailyTPBInfo: ReturnDataType<IDailyTPBInfo[]>;
+  dailyBlockAge: ReturnDataType<IDailyBlockAge[]>;
 }
 
-const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
+const Governance = ({
+  totalBlockInfo,
+  dailyTPSInfo,
+  dailyTPBInfo,
+  dailyBlockAge,
+}: Props): JSX.Element => {
   return (
     <>
       <NextSeo
@@ -69,7 +84,45 @@ const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
           my={"6"}
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
-        ></SimpleGrid>
+        >
+          <StatsCard
+            stat={totalBlockInfo.data["Min Block Time"]}
+            title="Min Block Time(second)"
+            status="inc"
+            link={totalBlockInfo.key}
+          />
+          <StatsCard
+            stat={totalBlockInfo.data["Average Block Time"]}
+            title="Average Block Time(second)"
+            status="unchanged"
+            link={totalBlockInfo.key}
+          />
+          <StatsCard
+            stat={totalBlockInfo.data["Max Block Time"]}
+            title="Max Block Time(second)"
+            status="dec"
+            link={totalBlockInfo.key}
+          />
+
+          <StatsCard
+            stat={totalBlockInfo.data["Min TX count per block"]}
+            title="Min TX count per block (TPB)"
+            status="dec"
+            link={totalBlockInfo.key}
+          />
+          <StatsCard
+            stat={totalBlockInfo.data["Average TX count per block"]}
+            title="Average TX count per block (TPB)"
+            status="unchanged"
+            link={totalBlockInfo.key}
+          />
+          <StatsCard
+            stat={totalBlockInfo.data["Max TX count per block"]}
+            title="Max TX count per block (TPB)"
+            status="inc"
+            link={totalBlockInfo.key}
+          />
+        </SimpleGrid>
         <SimpleGrid
           position={"relative"}
           transition={"all 0.9s ease-in-out"}
@@ -77,7 +130,47 @@ const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
           zIndex={100}
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
-        ></SimpleGrid>
+        >
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={dailyTPSInfo.data}
+            queryLink={dailyTPSInfo.key}
+            modelInfo=""
+            title={dailyTPSInfo.title}
+            baseSpan={3}
+            barDataKey="TPS"
+            lineDataKey="Average TPS"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={dailyTPBInfo.data}
+            queryLink={dailyTPBInfo.key}
+            modelInfo=""
+            title={dailyTPBInfo.title}
+            baseSpan={3}
+            barDataKey="TX per Block"
+            lineDataKey="Average TX in Block"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[0]}
+            additionalDumpTextToAddKeyToKeyBeUnique="tps"
+            data={dailyBlockAge.data}
+            queryLink={dailyBlockAge.key}
+            modelInfo=""
+            title={dailyBlockAge.title}
+            baseSpan={3}
+            barDataKey="Daily Block Age"
+            lineDataKey="Average Block Time"
+            xAxisDataKey="Day"
+          />
+        </SimpleGrid>
       </Box>
     </>
   );
