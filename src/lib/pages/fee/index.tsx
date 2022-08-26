@@ -1,6 +1,7 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import ChartBox from "lib/components/charts/LineChart";
 import { StatsCard } from "lib/components/charts/StateCard";
+import { StateCardRemoteData } from "lib/components/charts/StateCardRemoteData";
 import { ReturnDataType } from "lib/types/types/base";
 import {
   IAverageFeeOnEachDayOfWeek,
@@ -45,7 +46,7 @@ const Governance = ({
   return (
     <>
       <NextSeo
-        title={`${names.APP_NAME} (Dapss - Ref) | Business Intelligence Dashboard for ${names.BLOCKCHAIN}`}
+        title={`${names.APP_NAME} (Generated Fee) | Business Intelligence Dashboard for ${names.BLOCKCHAIN}`}
         description="Track the latest stats and trends on ${names.BLOCKCHAIN}"
         openGraph={{
           url: `https://${names.SITE_URL}/`,
@@ -70,6 +71,13 @@ const Governance = ({
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
         >
+          <StateCardRemoteData
+            url="https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd"
+            link="https://www.coingecko.com/en/coins/avalanche"
+            status="inc"
+            title={"Current AVAX Price (USD)"}
+            getStat={(data) => data["avalanche-2"].usd}
+          />
           <StatsCard
             stat={totalFeeInfo.data["Average Fee"]}
             title="Average TX Fee"

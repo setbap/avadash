@@ -1,12 +1,5 @@
 import Home from "lib/pages/home";
 import {
-  getAverageFeeOnEachDayOfWeek,
-  getDailyAverageTransactionFee,
-  getDailyTransactionFee,
-  getHourlyTransactionFee,
-  getTotalFeeInfo,
-} from "lib/requests/fee";
-import {
   getTotalBlockInfo,
   getDailyTPSInfo,
   getDailyTPBInfo,
@@ -24,12 +17,6 @@ export async function getStaticProps() {
     mostPopularActions,
     dailyNewWallets,
     currentNewWallet,
-    // fee
-    totalFeeInfo,
-    dailyTransactionFee,
-    hourlyTransactionFee,
-    dailyAverageTransactionFee,
-    averageFeeOnEachDayOfWeek,
   ] = await Promise.all([
     getTotalBlockInfo(),
     getDailyTPSInfo(),
@@ -39,13 +26,6 @@ export async function getStaticProps() {
     getMostPopularActions(),
     getDailyNewWallets(),
     getCurrentNewWallet(),
-
-    // fee
-    getTotalFeeInfo(),
-    getDailyTransactionFee(),
-    getHourlyTransactionFee(),
-    getDailyAverageTransactionFee(),
-    getAverageFeeOnEachDayOfWeek(),
   ]);
   return {
     props: {
@@ -56,12 +36,6 @@ export async function getStaticProps() {
       mostPopularActions,
       dailyNewWallets,
       currentNewWallet,
-      // fee
-      totalFeeInfo,
-      dailyTransactionFee,
-      hourlyTransactionFee,
-      dailyAverageTransactionFee,
-      averageFeeOnEachDayOfWeek,
     },
     revalidate: 10 * 60,
   };
