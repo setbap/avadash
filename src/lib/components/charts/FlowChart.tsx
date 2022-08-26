@@ -11,8 +11,18 @@ import { GRID_ITEM_SIZE } from "./template";
 import ChartSpanMenu from "../basic/ChartSpanMenu";
 import ChartHeader from "../basic/ChartHeader";
 import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
-import { ISankeyChart } from "lib/types/types/dapps";
 
+export interface ISankeyChart {
+  nodes: {
+    id: string;
+    color: string;
+  }[];
+  links: {
+    source: string;
+    target: string;
+    value: number;
+  }[];
+}
 interface Props {
   modelInfo: string;
   title: string;
