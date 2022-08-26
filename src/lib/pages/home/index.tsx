@@ -6,6 +6,7 @@ import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import { ReturnDataType } from "lib/types/types/base";
 import {
+  IAverageFeeOnEachDayOfWeek,
   IDailyTransactionFee,
   IHourlyTransactionFee,
 } from "lib/types/types/home";
@@ -43,11 +44,15 @@ const colors = [
 interface Props {
   dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
   hourlyTransactionFee: ReturnDataType<IHourlyTransactionFee[]>;
+  dailyAverageTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
+  averageFeeOnEachDayOfWeek: ReturnDataType<IAverageFeeOnEachDayOfWeek[]>;
 }
 
 const Governance = ({
   dailyTransactionFee,
   hourlyTransactionFee,
+  dailyAverageTransactionFee,
+  averageFeeOnEachDayOfWeek,
 }: Props): JSX.Element => {
   return (
     <>
@@ -105,9 +110,36 @@ const Governance = ({
             modelInfo=""
             title={hourlyTransactionFee.title}
             baseSpan={3}
+            extraDecimal={8}
             areaDataKey="Fee"
             isNotDate
             xAxisDataKey="Hour"
+          />
+
+          <ChartBox
+            customColor={colors[0]}
+            data={averageFeeOnEachDayOfWeek.data}
+            queryLink={averageFeeOnEachDayOfWeek.key}
+            modelInfo=""
+            title={averageFeeOnEachDayOfWeek.title}
+            baseSpan={3}
+            extraDecimal={8}
+            areaDataKey="Fee"
+            isNotDate
+            xAxisDataKey="Day Name"
+          />
+
+          <ChartBox
+            customColor={colors[3]}
+            data={dailyAverageTransactionFee.data}
+            queryLink={dailyAverageTransactionFee.key}
+            modelInfo=""
+            extraDecimal={8}
+            title={dailyAverageTransactionFee.title}
+            baseSpan={3}
+            additionalDumpTextToAddKeyToKeyBeUnique={"-"}
+            areaDataKey="Fee"
+            xAxisDataKey="Day"
           />
         </SimpleGrid>
       </Box>
