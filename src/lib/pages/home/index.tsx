@@ -60,7 +60,7 @@ const Governance = ({
   return (
     <>
       <NextSeo
-        title={`${names.APP_NAME} (Dapss - Ref) | Business Intelligence Dashboard for ${names.BLOCKCHAIN}`}
+        title={`${names.APP_NAME} NetWork Performance | Business Intelligence Dashboard for ${names.BLOCKCHAIN}`}
         description="Track the latest stats and trends on ${names.BLOCKCHAIN}"
         openGraph={{
           url: `https://${names.SITE_URL}/`,

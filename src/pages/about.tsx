@@ -1,4 +1,4 @@
-import { Box, chakra, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import MDRenderer from "lib/components/basic/MDRenderer";
 import names from "lib/utility/names";
 
