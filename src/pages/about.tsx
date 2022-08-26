@@ -19,6 +19,8 @@ const About = () => {
         >
           <MDRenderer>
             {`
+![alt text for screen readers](/og.png "Text to show on mouseover")
+
 
 ## About
 
