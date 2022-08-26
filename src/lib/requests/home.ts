@@ -2,10 +2,13 @@ import {
   IAverageFeeOnEachDayOfWeek,
   IDailyTransactionFee,
   IHourlyTransactionFee,
+  ITotalFeeInfo,
 } from "lib/types/types/home";
-import { getSimpleArrayData } from "./utils";
+import { getSimpleArrayData, getSimpleInfo } from "./utils";
 
-// requrest
+export const getTotalFeeInfo = () =>
+  getSimpleInfo<ITotalFeeInfo>("e9f105bf-f752-404f-b5b9-6ef1d7bda6a4", "");
+
 export const getDailyTransactionFee = () =>
   getSimpleArrayData<IDailyTransactionFee, IDailyTransactionFee>(
     "e040d0a3-79f9-4de9-be49-98d4ce43dfda",

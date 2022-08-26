@@ -4,14 +4,17 @@ import {
   getDailyAverageTransactionFee,
   getDailyTransactionFee,
   getHourlyTransactionFee,
+  getTotalFeeInfo,
 } from "lib/requests/home";
 export async function getStaticProps() {
   const [
+    totalFeeInfo,
     dailyTransactionFee,
     hourlyTransactionFee,
     dailyAverageTransactionFee,
     averageFeeOnEachDayOfWeek,
   ] = await Promise.all([
+    getTotalFeeInfo(),
     getDailyTransactionFee(),
     getHourlyTransactionFee(),
     getDailyAverageTransactionFee(),
@@ -19,6 +22,7 @@ export async function getStaticProps() {
   ]);
   return {
     props: {
+      totalFeeInfo,
       dailyTransactionFee,
       hourlyTransactionFee,
       dailyAverageTransactionFee,

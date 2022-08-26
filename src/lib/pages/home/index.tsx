@@ -9,6 +9,7 @@ import {
   IAverageFeeOnEachDayOfWeek,
   IDailyTransactionFee,
   IHourlyTransactionFee,
+  ITotalFeeInfo,
 } from "lib/types/types/home";
 import names from "lib/utility/names";
 
@@ -42,6 +43,7 @@ const colors = [
 ];
 
 interface Props {
+  totalFeeInfo: ReturnDataType<ITotalFeeInfo>;
   dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
   hourlyTransactionFee: ReturnDataType<IHourlyTransactionFee[]>;
   dailyAverageTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
@@ -49,6 +51,7 @@ interface Props {
 }
 
 const Governance = ({
+  totalFeeInfo,
   dailyTransactionFee,
   hourlyTransactionFee,
   dailyAverageTransactionFee,
@@ -82,7 +85,20 @@ const Governance = ({
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
         >
-          {/* put cards */}
+          <StatsCard
+            stat={totalFeeInfo.data["Average Fee"]}
+            title="Average TX Fee"
+            status="inc"
+            decimal={4}
+            link={totalFeeInfo.key}
+          />
+
+          <StatsCard
+            stat={totalFeeInfo.data["Total Fee"]}
+            title="Total Generated Fee"
+            status="inc"
+            link={totalFeeInfo.key}
+          />
         </SimpleGrid>
         <SimpleGrid
           position={"relative"}

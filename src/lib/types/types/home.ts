@@ -13,3 +13,8 @@ export interface IAverageFeeOnEachDayOfWeek {
   "Day Number": string;
   Fee: number;
 }
+
+export interface ITotalFeeInfo {
+  "Total Fee": number;
+  "Average Fee": number;
+}
