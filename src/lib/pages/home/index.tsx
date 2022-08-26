@@ -5,12 +5,7 @@ import ChartBox from "lib/components/charts/LineChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import { ReturnDataType } from "lib/types/types/base";
-import {
-  IAverageFeeOnEachDayOfWeek,
-  IDailyTransactionFee,
-  IHourlyTransactionFee,
-  ITotalFeeInfo,
-} from "lib/types/types/home";
+
 import names from "lib/utility/names";
 
 import { NextSeo } from "next-seo";
@@ -43,20 +38,10 @@ const colors = [
 ];
 
 interface Props {
-  totalFeeInfo: ReturnDataType<ITotalFeeInfo>;
-  dailyTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
-  hourlyTransactionFee: ReturnDataType<IHourlyTransactionFee[]>;
-  dailyAverageTransactionFee: ReturnDataType<IDailyTransactionFee[]>;
-  averageFeeOnEachDayOfWeek: ReturnDataType<IAverageFeeOnEachDayOfWeek[]>;
+  dailyTransactionFee: ReturnDataType<any[]>;
 }
 
-const Governance = ({
-  totalFeeInfo,
-  dailyTransactionFee,
-  hourlyTransactionFee,
-  dailyAverageTransactionFee,
-  averageFeeOnEachDayOfWeek,
-}: Props): JSX.Element => {
+const Governance = ({ dailyTransactionFee }: Props): JSX.Element => {
   return (
     <>
       <NextSeo
@@ -84,22 +69,7 @@ const Governance = ({
           my={"6"}
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
-        >
-          <StatsCard
-            stat={totalFeeInfo.data["Average Fee"]}
-            title="Average TX Fee"
-            status="inc"
-            decimal={4}
-            link={totalFeeInfo.key}
-          />
-
-          <StatsCard
-            stat={totalFeeInfo.data["Total Fee"]}
-            title="Total Generated Fee"
-            status="inc"
-            link={totalFeeInfo.key}
-          />
-        </SimpleGrid>
+        ></SimpleGrid>
         <SimpleGrid
           position={"relative"}
           transition={"all 0.9s ease-in-out"}
@@ -107,57 +77,7 @@ const Governance = ({
           zIndex={100}
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
-        >
-          <ChartBox
-            customColor={colors[0]}
-            data={dailyTransactionFee.data}
-            queryLink={dailyTransactionFee.key}
-            modelInfo=""
-            title={dailyTransactionFee.title}
-            baseSpan={3}
-            areaDataKey="Fee"
-            xAxisDataKey="Day"
-          />
-
-          <ChartBox
-            customColor={colors[0]}
-            data={hourlyTransactionFee.data}
-            queryLink={hourlyTransactionFee.key}
-            modelInfo=""
-            title={hourlyTransactionFee.title}
-            baseSpan={3}
-            extraDecimal={8}
-            areaDataKey="Fee"
-            isNotDate
-            xAxisDataKey="Hour"
-          />
-
-          <ChartBox
-            customColor={colors[0]}
-            data={averageFeeOnEachDayOfWeek.data}
-            queryLink={averageFeeOnEachDayOfWeek.key}
-            modelInfo=""
-            title={averageFeeOnEachDayOfWeek.title}
-            baseSpan={3}
-            extraDecimal={8}
-            areaDataKey="Fee"
-            isNotDate
-            xAxisDataKey="Day Name"
-          />
-
-          <ChartBox
-            customColor={colors[3]}
-            data={dailyAverageTransactionFee.data}
-            queryLink={dailyAverageTransactionFee.key}
-            modelInfo=""
-            extraDecimal={8}
-            title={dailyAverageTransactionFee.title}
-            baseSpan={3}
-            additionalDumpTextToAddKeyToKeyBeUnique={"-"}
-            areaDataKey="Fee"
-            xAxisDataKey="Day"
-          />
-        </SimpleGrid>
+        ></SimpleGrid>
       </Box>
     </>
   );
