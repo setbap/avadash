@@ -105,7 +105,11 @@ const Governance = ({
             customColor={colors[0]}
             data={dailyTransactionFee.data}
             queryLink={dailyTransactionFee.key}
-            modelInfo=""
+            infoSizePercentage={40}
+            modelInfo={`
+### Total Transaction Fees ($AVAX)
+This chart shows the total fee paid per day. As you can see, on May 11, the Avalanche network experienced its busiest day. The total fee paid on this day has doubled compared to the previous day (nearly 30,000 Avax).
+            `}
             title={dailyTransactionFee.title}
             baseSpan={3}
             areaDataKey="Fee"
@@ -116,8 +120,13 @@ const Governance = ({
             customColor={colors[0]}
             data={hourlyTransactionFee.data}
             queryLink={hourlyTransactionFee.key}
-            modelInfo=""
+            modelInfo={`
+### Average Transaction Fees in Each Hour ($AVAX)
+
+This chart shows the average fee paid per hour of the day. As you can see, transactions need more fees to be done at 7AM and 13PM, and the network is more crowded during these hours. Also at 10AM, the fee is the lowest of all the hours of the day, and the network is quieter.
+            `}
             title={hourlyTransactionFee.title}
+            infoSizePercentage={33}
             baseSpan={3}
             extraDecimal={8}
             areaDataKey="Fee"

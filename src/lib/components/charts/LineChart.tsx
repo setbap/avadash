@@ -6,6 +6,7 @@ import {
   MenuDivider,
   MenuItemOption,
   MenuOptionGroup,
+  Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import moment from "moment";
@@ -28,12 +29,14 @@ import { AnimatePresence } from "framer-motion";
 import MotionBox from "../motion/Box";
 import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 import TrendLine from "./TrendLine";
+import MDRenderer from "../basic/MDRenderer";
 
 interface Props {
   modelInfo: string;
   xAxisDataKey: string;
   areaDataKey: string;
   title: string;
+  infoSizePercentage?: number;
   data: any[];
   extraDecimal?: number;
   isNotDate?: boolean;
@@ -59,6 +62,7 @@ const ChartBox = ({
   data,
   title,
   modelInfo,
+  infoSizePercentage = 50,
   additionalDumpTextToAddKeyToKeyBeUnique = "",
   defultSelectedRange = "all",
   showMonthly = false,
@@ -150,7 +154,7 @@ const ChartBox = ({
   const textColor = useColorModeValue("gray.900", "gray.100");
   const chartColor = customColor;
   const chartUniquKey = `${areaDataKey}-${xAxisDataKey}-${additionalDumpTextToAddKeyToKeyBeUnique}`;
-
+  const showExtraInfo: boolean = !(modelInfo === "" || modelInfo === null);
   return (
     <GridItem
       rowSpan={1}
@@ -162,8 +166,38 @@ const ChartBox = ({
       borderRadius={"2xl"}
       width="100%"
       colSpan={spanItem}
+      display="flex"
+      flexDir={
+        spanItem["2xl"] !== 3
+          ? "column-reverse"
+          : ["column-reverse", "column-reverse", "column-reverse", "row", "row"]
+      }
     >
+      {showExtraInfo && (
+        <Box
+          bg={"#1c1c1c"}
+          p={6}
+          rounded="lg"
+          w={
+            spanItem["2xl"] !== 3
+              ? "100%"
+              : [
+                  "100%",
+                  "100%",
+                  "100%",
+                  `${50}%`,
+                  `${infoSizePercentage}%`,
+                  `${infoSizePercentage}%`,
+                ]
+          }
+        >
+          <Box>
+            <MDRenderer>{modelInfo}</MDRenderer>
+          </Box>
+        </Box>
+      )}
       <Box
+        flex={1}
         px="6"
         pt="4"
         pb={"2"}
@@ -212,7 +246,7 @@ const ChartBox = ({
               />
             </MenuList>
           }
-          modalInfo={modelInfo}
+          modalInfo={""}
           title={title}
         />
         <Box p={"1"} />

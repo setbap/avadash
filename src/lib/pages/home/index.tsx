@@ -88,7 +88,7 @@ const Governance = ({
           cardType: "summary_large_image",
         }}
       />
-      <Box mx={"auto"} px={{ base: 6, sm: 2, md: 8 }}>
+      <Box mx={"auto"} px={{ base: 3, sm: 2, md: 8 }}>
         <SimpleGrid
           my={"6"}
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
@@ -143,6 +143,7 @@ const Governance = ({
           position={"relative"}
           transition={"all 0.9s ease-in-out"}
           py={"6"}
+          gap={4}
           zIndex={100}
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
