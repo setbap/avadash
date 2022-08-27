@@ -167,6 +167,7 @@ const ChartBox = ({
       width="100%"
       colSpan={spanItem}
       display="flex"
+      flex={2}
       flexDir={
         spanItem["2xl"] !== 3
           ? "column-reverse"
@@ -178,6 +179,7 @@ const ChartBox = ({
           bg={"#1c1c1c"}
           p={6}
           rounded="lg"
+          height={"full"}
           w={
             spanItem["2xl"] !== 3
               ? "100%"
