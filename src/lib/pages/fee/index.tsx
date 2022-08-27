@@ -111,7 +111,7 @@ const Governance = ({
 This chart shows the total fee paid per day. As you can see, on May 11, the Avalanche network experienced its busiest day. The total fee paid on this day has doubled compared to the previous day (nearly 30,000 Avax).
             `}
             title={dailyTransactionFee.title}
-            baseSpan={3}
+            baseSpan={1}
             areaDataKey="Fee"
             xAxisDataKey="Day"
           />
@@ -127,7 +127,7 @@ This chart shows the average fee paid per hour of the day. As you can see, trans
             `}
             title={hourlyTransactionFee.title}
             infoSizePercentage={33}
-            baseSpan={3}
+            baseSpan={2}
             extraDecimal={8}
             areaDataKey="Fee"
             isNotDate
