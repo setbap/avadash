@@ -56,7 +56,6 @@ export function pivotData<T extends { [key: string]: any }>(
     const xAxisKey = isDate
       ? moment(item[xAxisKey2]).format("MM/DD/YYYY")
       : item[xAxisKey2];
-
     if (!Boolean(item[valueKey]) || item[valueKey] < minValue) {
     } else if (dailyEachBridgeSum[xAxisKey] === undefined) {
       dailyEachBridgeSum[xAxisKey] = {};
@@ -80,6 +79,70 @@ export function pivotData<T extends { [key: string]: any }>(
   });
 
   return dailyBridgeValue;
+}
+
+export function summerizeRow<T extends { [key: string]: any }>(
+  data: T[],
+  nameKey: keyof T,
+  valueKey: keyof T
+) {
+  const keyValueData: { [key: string]: number } = {};
+  data
+    .map((item) => ({
+      [nameKey]: item[nameKey],
+      [valueKey]: item[valueKey],
+    }))
+    .forEach((row: any) => {
+      keyValueData[row[nameKey]] =
+        (!keyValueData[row[nameKey]] ? 0 : keyValueData[row[nameKey]]) +
+        row[valueKey];
+    });
+  // @ts-ignore
+  const x2: { nameKey: string; valueKey: number }[] = Object.entries(
+    keyValueData
+  ).map((t) => ({
+    [nameKey]: t[0],
+    [valueKey]: t[1],
+  }));
+  return x2;
+}
+
+export function summerizeRow2Item<T extends { [key: string]: any }>(
+  data: T[],
+  nameKey: keyof T,
+  valueKey1: keyof T,
+  valueKey2: keyof T,
+  isDate: boolean = false
+) {
+  const keyValue1Data: { [key: string]: number } = {};
+  const keyValue2Data: { [key: string]: number } = {};
+  data
+    .map((item) => ({
+      [nameKey]: isDate
+        ? moment(item[nameKey]).format("MM/DD/YYYY")
+        : item[nameKey],
+      [valueKey1]: item[valueKey1],
+      [valueKey2]: item[valueKey2],
+    }))
+    .forEach((row: any) => {
+      keyValue1Data[row[nameKey]] =
+        (!keyValue1Data[row[nameKey]] ? 0 : keyValue1Data[row[nameKey]]) +
+        row[valueKey1];
+
+      keyValue2Data[row[nameKey]] =
+        (!keyValue2Data[row[nameKey]] ? 0 : keyValue2Data[row[nameKey]]) +
+        row[valueKey2];
+    });
+  const data2 = Object.entries(keyValue2Data);
+  // @ts-ignore
+  const x2: { nameKey: string; valueKey: number }[] = Object.entries(
+    keyValue1Data
+  ).map((t, index) => ({
+    [nameKey]: t[0],
+    [valueKey1]: t[1],
+    [valueKey2]: data2[index][1],
+  }));
+  return x2;
 }
 
 /*
