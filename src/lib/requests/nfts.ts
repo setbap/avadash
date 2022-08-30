@@ -82,7 +82,7 @@ export const getNFTSalesInfo = async () => {
   const salesCount = summerizeRow2Item(
     data,
     "Day",
-        ,
+    "Sales Count",
     "Sales Count",
     true
   ) as any[];
