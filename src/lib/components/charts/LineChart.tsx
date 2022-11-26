@@ -70,9 +70,32 @@ const ChartBox = ({
 }: Props) => {
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
   const [defultViewSetting, setDefultViewSetting] = useState(defultDateView);
+  // const [selectedDate, setSelectedDate] = useState<number | string>(
+  //   defultSelectedRange
+  // );
+  const getMaxDate = () => {
+    let maxD = moment(data[0][xAxisDataKey]);
+    data.forEach((item) => {
+      if (moment(item[xAxisDataKey]).isAfter(maxD)) {
+        maxD = moment(item[xAxisDataKey]);
+      }
+    });
+    return maxD;
+  };
+  const maxDate = getMaxDate();
+
   const [selectedDate, setSelectedDate] = useState<number | string>(
-    defultSelectedRange
-  );
+    Math.round(
+      (maxDate!.toDate().getTime() -
+        new Date(
+          maxDate!.toDate().getFullYear(),
+          0,
+          1
+        ).getTime()) /
+      (1000 * 60 * 60 * 24)
+    ) + 1);
+
+
   const [chartData, setChartData] = useState(data);
   const [savedDailyChart, setSavedDailyChart] = useState(data);
   const filterDateAccordingDay = (numberOfDays: number) => {
@@ -86,16 +109,7 @@ const ChartBox = ({
     setSelectedDate(numberOfDays);
     setChartData(newData);
   };
-  const getMaxDate = () => {
-    let maxD = moment(data[0][xAxisDataKey]);
-    data.forEach((item) => {
-      if (moment(item[xAxisDataKey]).isAfter(maxD)) {
-        maxD = moment(item[xAxisDataKey]);
-      }
-    });
-    return maxD;
-  };
-  const maxDate = isNotDate ? null : getMaxDate();
+
   const getMinDate = () => {
     let minD = moment(data[0][xAxisDataKey]);
     data.forEach((item) => {
@@ -184,13 +198,13 @@ const ChartBox = ({
             spanItem["2xl"] !== 3
               ? "100%"
               : [
-                  "100%",
-                  "100%",
-                  "100%",
-                  `${50}%`,
-                  `${infoSizePercentage}%`,
-                  `${infoSizePercentage}%`,
-                ]
+                "100%",
+                "100%",
+                "100%",
+                `${50}%`,
+                `${infoSizePercentage}%`,
+                `${infoSizePercentage}%`,
+              ]
           }
         >
           <Box>
@@ -374,7 +388,7 @@ const ChartBox = ({
                             0,
                             1
                           ).getTime()) /
-                          (1000 * 60 * 60 * 24)
+                        (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },

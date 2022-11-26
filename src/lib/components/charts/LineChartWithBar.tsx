@@ -64,15 +64,12 @@ const LineChartWithBar = ({
   title,
   modelInfo,
   additionalDumpTextToAddKeyToKeyBeUnique = "",
-  defultSelectedRange = "all",
+  defultSelectedRange = "2022",
   showMonthly = false,
   customColor = "var(--chakra-colors-green-300)",
 }: Props) => {
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
   const [defultViewSetting, setDefultViewSetting] = useState(defultDateView);
-  const [selectedDate, setSelectedDate] = useState<number | string>(
-    defultSelectedRange
-  );
   const [chartData, setChartData] = useState(data);
   const [savedDailyChart, setSavedDailyChart] = useState(data);
   const filterDateAccordingDay = (numberOfDays: number) => {
@@ -106,6 +103,16 @@ const LineChartWithBar = ({
     return minD;
   };
   const minDate = isNotDate ? null : getMinDate();
+  const [selectedDate, setSelectedDate] = useState<number | string>(
+    Math.round(
+      (maxDate!.toDate().getTime() -
+        new Date(
+          maxDate!.toDate().getFullYear(),
+          0,
+          1
+        ).getTime()) /
+      (1000 * 60 * 60 * 24)
+    ) + 1);
 
   const changeDataToMonethly = () => {
     const newData: { [key: string]: number[] } = {};
@@ -359,7 +366,7 @@ const LineChartWithBar = ({
                             0,
                             1
                           ).getTime()) /
-                          (1000 * 60 * 60 * 24)
+                        (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },

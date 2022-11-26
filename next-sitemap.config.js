@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 const NextSitemapConfig = {
-  siteUrl: `https://AvaDash.vercel.app`,
+  siteUrl: `https://AvaxDash.vercel.app`,
   generateRobotsTxt: true,
 };
 
