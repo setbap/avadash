@@ -56,7 +56,7 @@ const LineChartWithBar = ({
   showSeprate = false,
   barColor,
   isNotDate = false,
-  extraDecimal = 2,
+  extraDecimal = 4,
   lineDataKey,
   barDataKey,
   xAxisDataKey,
@@ -107,7 +107,7 @@ const LineChartWithBar = ({
     Math.round(
       (maxDate!.toDate().getTime() -
         new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
-        (1000 * 60 * 60 * 24)
+      (1000 * 60 * 60 * 24)
     ) + 1
   );
 
@@ -162,7 +162,7 @@ const LineChartWithBar = ({
       Math.round(
         (maxDate!.toDate().getTime() -
           new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
-          (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24)
       ) + 1
     );
   };
@@ -175,6 +175,15 @@ const LineChartWithBar = ({
   useEffect(() => {
     resetChartData();
   }, []);
+
+  const [averageData, setaverageData] = useState(0)
+  useEffect(() => {
+    const avg = chartData.map(item => item[barDataKey]).reduce((prev, current) => prev + current, 0);
+    setaverageData(avg / chartData.length)
+
+
+  }, [chartData])
+
   return (
     <GridItem
       rowSpan={1}
@@ -245,7 +254,7 @@ const LineChartWithBar = ({
           width={"100%"}
         >
           <ComposedChart
-            data={chartData}
+            data={chartData.map(item => ({ ...item, [lineDataKey]: averageData }))}
             syncId={chartUniquKey + "s"}
             className="mt-1 mb-1"
           >
@@ -289,11 +298,18 @@ const LineChartWithBar = ({
 
             <YAxis
               yAxisId="left"
-              tickFormatter={(value) =>
-                millify(value, {
-                  precision: extraDecimal,
-                  decimalSeparator: ".",
-                })
+              tickFormatter={(value) => {
+
+                try {
+                  return millify(value, {
+                    precision: extraDecimal,
+                    decimalSeparator: ".",
+                  })
+
+                } catch (e) {
+                  return "";
+                }
+              }
               }
               width={40}
               fontSize="12"
@@ -333,11 +349,13 @@ const LineChartWithBar = ({
             />
             <Bar
               yAxisId={showSeprate ? "right" : "left"}
+              legendType="square"
               dataKey={barDataKey}
               fill={`url(#color${additionalDumpTextToAddKeyToKeyBeUnique})`}
             />
 
             <Area
+
               dataKey={lineDataKey}
               yAxisId="left"
               strokeWidth={"2"}
@@ -379,7 +397,7 @@ const LineChartWithBar = ({
                             0,
                             1
                           ).getTime()) /
-                          (1000 * 60 * 60 * 24)
+                        (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },
@@ -390,7 +408,7 @@ const LineChartWithBar = ({
           )}
         </AnimatePresence>
       </Box>
-    </GridItem>
+    </GridItem >
   );
 };
 
