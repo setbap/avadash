@@ -209,8 +209,7 @@ const Governance = ({
             title="Sales count"
             baseSpan={3}
           />
-          <BarGraph
-            isSeprate
+          <StackedAreaChart
             queryLink={queryLink}
             extraInfoToTooltip=""
             modelInfo=""
@@ -222,11 +221,11 @@ const Governance = ({
             baseSpan={3}
             labels={[
               {
-                color: colors[1],
+                color: colors[5],
                 key: "Unique Buyers",
               },
               {
-                color: colors[2],
+                color: colors[3],
                 key: "Unique Sellers",
               },
             ]}

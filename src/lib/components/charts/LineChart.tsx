@@ -8,7 +8,7 @@ import {
   MenuOptionGroup,
   Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import millify from "millify";
 import {
@@ -87,14 +87,10 @@ const ChartBox = ({
   const [selectedDate, setSelectedDate] = useState<number | string>(
     Math.round(
       (maxDate!.toDate().getTime() -
-        new Date(
-          maxDate!.toDate().getFullYear(),
-          0,
-          1
-        ).getTime()) /
-      (1000 * 60 * 60 * 24)
-    ) + 1);
-
+        new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
+        (1000 * 60 * 60 * 24)
+    ) + 1
+  );
 
   const [chartData, setChartData] = useState(data);
   const [savedDailyChart, setSavedDailyChart] = useState(data);
@@ -146,6 +142,9 @@ const ChartBox = ({
     setChartData(savedDailyChart);
     setDefultViewSetting("day");
   };
+  useEffect(() => {
+    resetChartData();
+  }, []);
 
   const filterDateAccordingRange = (minDate: Date, maxDate: Date) => {
     const newData = data.filter((item) => {
@@ -159,8 +158,16 @@ const ChartBox = ({
   };
 
   const resetChartData = () => {
-    setSelectedDate("all");
-    setChartData(data);
+    if (isNotDate) {
+      return;
+    }
+    filterDateAccordingDay(
+      Math.round(
+        (maxDate!.toDate().getTime() -
+          new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1
+    );
   };
 
   const bgTooltip = useColorModeValue("gray.300", "gray.700");
@@ -198,13 +205,13 @@ const ChartBox = ({
             spanItem["2xl"] !== 3
               ? "100%"
               : [
-                "100%",
-                "100%",
-                "100%",
-                `${50}%`,
-                `${infoSizePercentage}%`,
-                `${infoSizePercentage}%`,
-              ]
+                  "100%",
+                  "100%",
+                  "100%",
+                  `${50}%`,
+                  `${infoSizePercentage}%`,
+                  `${infoSizePercentage}%`,
+                ]
           }
         >
           <Box>
@@ -314,12 +321,16 @@ const ChartBox = ({
             />
             <YAxis
               domain={domain}
-              tickFormatter={(value) =>
-                millify(value, {
-                  precision: extraDecimal,
-                  decimalSeparator: ".",
-                })
-              }
+              tickFormatter={(value) => {
+                try {
+                  return millify(value, {
+                    precision: extraDecimal,
+                    decimalSeparator: ".",
+                  });
+                } catch (error) {
+                  return "";
+                }
+              }}
               width={40}
               fontSize="12"
               tickSize={8}
@@ -388,7 +399,7 @@ const ChartBox = ({
                             0,
                             1
                           ).getTime()) /
-                        (1000 * 60 * 60 * 24)
+                          (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },
