@@ -170,6 +170,11 @@ const ChartBox = ({
     );
   };
 
+  const setChartToAll = () => {
+    setChartData(data);
+    setSelectedDate("all");
+  };
+
   const bgTooltip = useColorModeValue("gray.300", "gray.700");
   const bgCard = useColorModeValue("white", "#191919");
   const textColor = useColorModeValue("gray.900", "gray.100");
@@ -384,7 +389,7 @@ const ChartBox = ({
                 selecteRange={selectedDate}
                 onSelectLastNthDay={filterDateAccordingDay}
                 onSelectRangeDay={filterDateAccordingRange}
-                onResetClick={resetChartData}
+                onResetClick={setChartToAll}
                 minDate={minDate!.toDate()!}
                 maxDate={maxDate!.toDate()}
                 filters={[
