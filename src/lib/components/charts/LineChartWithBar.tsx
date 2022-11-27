@@ -7,7 +7,7 @@ import {
   MenuItemOption,
   MenuOptionGroup,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import millify from "millify";
 import {
@@ -106,13 +106,10 @@ const LineChartWithBar = ({
   const [selectedDate, setSelectedDate] = useState<number | string>(
     Math.round(
       (maxDate!.toDate().getTime() -
-        new Date(
-          maxDate!.toDate().getFullYear(),
-          0,
-          1
-        ).getTime()) /
-      (1000 * 60 * 60 * 24)
-    ) + 1);
+        new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
+        (1000 * 60 * 60 * 24)
+    ) + 1
+  );
 
   const changeDataToMonethly = () => {
     const newData: { [key: string]: number[] } = {};
@@ -151,17 +148,28 @@ const LineChartWithBar = ({
     setChartData(newData);
   };
 
-  const resetChartData = () => {
-    setSelectedDate("all");
-    setChartData(data);
-  };
-
   const bgTooltip = useColorModeValue("gray.300", "gray.700");
   const bgCard = useColorModeValue("white", "#191919");
   const textColor = useColorModeValue("gray.900", "gray.100");
   const chartColor = customColor;
   const chartUniquKey = `${lineDataKey}-${xAxisDataKey}-${additionalDumpTextToAddKeyToKeyBeUnique}`;
 
+  const resetChartData = () => {
+    if (isNotDate) {
+      return;
+    }
+    filterDateAccordingDay(
+      Math.round(
+        (maxDate!.toDate().getTime() -
+          new Date(maxDate!.toDate().getFullYear(), 0, 1).getTime()) /
+          (1000 * 60 * 60 * 24)
+      ) + 1
+    );
+  };
+
+  useEffect(() => {
+    resetChartData();
+  }, []);
   return (
     <GridItem
       rowSpan={1}
@@ -366,7 +374,7 @@ const LineChartWithBar = ({
                             0,
                             1
                           ).getTime()) /
-                        (1000 * 60 * 60 * 24)
+                          (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },
